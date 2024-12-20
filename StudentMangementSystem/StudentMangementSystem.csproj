@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="nlog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LoggingService\LoggingService.csproj" />
   </ItemGroup>
 
