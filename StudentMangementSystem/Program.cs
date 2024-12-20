@@ -1,6 +1,11 @@
 using Microsoft.AspNetCore.HttpOverrides;
+using StudentMangementSystem.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.ConfigureCors();
+builder.Services.ConfigureIISIntegration();
+
 
 builder.Services.AddControllers();
 
@@ -18,6 +23,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHeaders = ForwardedHeaders.All
 });
 
+app.UseCors("CorsPolicy");
 
 app.MapControllers();
 
