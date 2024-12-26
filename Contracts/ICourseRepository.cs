@@ -2,7 +2,7 @@ using System;
 
 namespace Contracts;
 
-public interface IRepositoryEntrollment
+public interface ICoruseRepository
 {
 
 }

@@ -7,20 +7,20 @@ namespace Repository;
 public class RepositoryManager : IRepositoryManager
 {
     private readonly RepositoryContext _repositoryContext;
-    private readonly Lazy<IRepositoryStudent> _studentRepository;
-    private readonly Lazy<IRepositoryCourse> _courseRepository;
-    private readonly Lazy<IRepositoryEntrollment> _enrollmentRepository;
+    private readonly Lazy<IStudentRepository> _studentRepository;
+    private readonly Lazy<ICoruseRepository> _courseRepository;
+    private readonly Lazy<IEnrollmentRepository> _enrollmentRepository;
 
     public RepositoryManager(RepositoryContext repositoryContext)
     {
         _repositoryContext = repositoryContext;
-        _courseRepository = new Lazy<IRepositoryCourse>(() => new RepositoryCourse(_repositoryContext));
-        _studentRepository = new Lazy<IRepositoryStudent>(() => new RepositoryStudent(_repositoryContext));
-        _enrollmentRepository = new Lazy<IRepositoryEntrollment>(() => new RepositoryEnrollment(_repositoryContext));
+        _courseRepository = new Lazy<ICoruseRepository>(() => new CoruseRipository(_repositoryContext));
+        _studentRepository = new Lazy<IStudentRepository>(() => new StudentRepository(_repositoryContext));
+        _enrollmentRepository = new Lazy<IEnrollmentRepository>(() => new EnrollmentRepository(_repositoryContext));
     }
 
-    public IRepositoryStudent Student => _studentRepository.Value;
-    public IRepositoryCourse Course => _courseRepository.Value;
-    public IRepositoryEntrollment Entrollment => _enrollmentRepository.Value;
+    public IStudentRepository Student => _studentRepository.Value;
+    public ICoruseRepository Course => _courseRepository.Value;
+    public IEnrollmentRepository Entrollment => _enrollmentRepository.Value;
     public void Save() => _repositoryContext.SaveChanges();
 }

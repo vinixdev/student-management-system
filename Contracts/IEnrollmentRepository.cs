@@ -2,7 +2,7 @@ using System;
 
 namespace Contracts;
 
-public interface IRepositoryCourse
+public interface IEnrollmentRepository
 {
 
 }
