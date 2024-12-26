@@ -31,4 +31,9 @@ public static class ServiceExtensions
     {
         services.AddSingleton<ILoggerManager, LoggerManager>();
     }
+
+    public static void ConfigureRepositoryManager(this IServiceCollection services)
+    {
+        services.AddScoped<IRepositoryManager, IRepositoryManager>();
+    }
 }
