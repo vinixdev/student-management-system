@@ -1,3 +1,4 @@
+using AutoMapper;
 using Contracts;
 using Service.Contracts;
 
@@ -11,15 +12,18 @@ public class ServiceManager : IServiceManager
     private readonly Lazy<ICourseService> _courseService;
     private readonly Lazy<IEnrollmentService> _enrollmentService;
 
-    public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, StudentService studentService, CourseService courseService, EnrollmentService enrollmentService)
+    private readonly IMapper _mapper;
+
+    public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger, StudentService studentService, CourseService courseService, EnrollmentService enrollmentService, IMapper mapper)
     {
 
         _repository = repositoryManager;
         _logger = logger;
+        _mapper = mapper;
 
-        _studentService = new Lazy<IStudentService>(() => new StudentService(_repository, _logger));
-        _courseService = new Lazy<ICourseService>(() => new CourseService(_repository, _logger));
-        _enrollmentService = new Lazy<IEnrollmentService>(() => new EnrollmentService(_repository, _logger));
+        _studentService = new Lazy<IStudentService>(() => new StudentService(_repository, _logger, _mapper));
+        _courseService = new Lazy<ICourseService>(() => new CourseService(_repository, _logger, _mapper));
+        _enrollmentService = new Lazy<IEnrollmentService>(() => new EnrollmentService(_repository, _logger, _mapper));
 
     }
 

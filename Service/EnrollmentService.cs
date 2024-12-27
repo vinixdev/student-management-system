@@ -1,3 +1,4 @@
+using AutoMapper;
 using Contracts;
 using Service.Contracts;
 
@@ -8,9 +9,12 @@ public class EnrollmentService : IEnrollmentService
     private readonly ILoggerManager _logger;
     private readonly IRepositoryManager _repository;
 
-    public EnrollmentService(IRepositoryManager repositoryManager, ILoggerManager logger)
+    private readonly IMapper _mapper;
+
+    public EnrollmentService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper)
     {
         _repository = repositoryManager;
         _logger = logger;
+        _mapper = mapper;
     }
 }
