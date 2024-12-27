@@ -11,6 +11,7 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggingService();
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddControllers();
 
