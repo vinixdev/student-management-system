@@ -1,4 +1,4 @@
-tudent Management System
+# Student Management System
 
 A simple web api with Asp.Net Core that manages students, courses and also their enrollments.
 
