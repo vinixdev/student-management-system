@@ -10,4 +10,9 @@ public sealed class StudentRepository : RepositoryBase<Student>, IStudentReposit
     public StudentRepository(RepositoryContext repositoryContext) : base(repositoryContext)
     {
     }
+
+    public IEnumerable<Student> GetAllStudents(bool trackChanges)
+    {
+        return FindAll(trackChanges);
+    }
 }
