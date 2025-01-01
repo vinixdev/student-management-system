@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Service;
 using Service.Contracts;
 
-namespace StudentMangementSystem.Extensions;
+namespace StudentManagementSystem.Extensions;
 
 public static class ServiceExtensions
 {

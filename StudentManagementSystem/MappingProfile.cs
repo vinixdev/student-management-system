@@ -2,7 +2,7 @@ using AutoMapper;
 using Entities.Models;
 using Shared.DataTransferObjecs;
 
-namespace StudentMangementSystem;
+namespace StudentManagementSystem;
 
 public class MappingProfile : Profile
 {

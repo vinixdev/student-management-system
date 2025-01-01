@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Repository;
 
-namespace StudentMangementSystem.ContextFactory;
+namespace StudentManagementSystem.ContextFactory;
 
 public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
 {
@@ -14,7 +14,7 @@ public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryCo
         .Build();
 
         var builder = new DbContextOptionsBuilder<RepositoryContext>().UseNpgsql(configuration.GetConnectionString("postgresqlConnection"),
-        b => b.MigrationsAssembly("StudentMangementSystem"));
+        b => b.MigrationsAssembly("StudentManagementSystem"));
 
         return new RepositoryContext(builder.Options);
     }

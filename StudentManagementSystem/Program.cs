@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
-using StudentMangementSystem.Extensions;
+using StudentManagementSystem.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
