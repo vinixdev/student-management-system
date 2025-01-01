@@ -1,6 +1,7 @@
 using AutoMapper;
 using Contracts;
 using Service.Contracts;
+using Shared.DataTransferObjecs;
 
 namespace Service;
 
@@ -17,5 +18,16 @@ public class StudentService : IStudentService
         _repository = repositoryManager;
         _logger = logger;
         _mapper = mapper;
+    }
+
+    public async Task<IEnumerable<StudentDto>> GetAllStudents(bool trackChanges)
+    {
+
+        var students = await _repository.Student.GetAllStudents(trackChanges);
+
+        var studentsDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
+
+        return studentsDtos;
+
     }
 }

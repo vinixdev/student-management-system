@@ -1,6 +1,7 @@
 using System;
 using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository;
 
@@ -11,8 +12,8 @@ public sealed class StudentRepository : RepositoryBase<Student>, IStudentReposit
     {
     }
 
-    public IEnumerable<Student> GetAllStudents(bool trackChanges)
+    public async Task<IEnumerable<Student>> GetAllStudents(bool trackChanges)
     {
-        return FindAll(trackChanges);
+        return await FindAll(trackChanges).ToListAsync();
     }
 }
