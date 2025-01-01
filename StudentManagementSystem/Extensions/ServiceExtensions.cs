@@ -2,6 +2,7 @@ using System;
 using Contracts;
 using LoggingService;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Repository;
 using Service;
 using Service.Contracts;
 
@@ -36,10 +37,11 @@ public static class ServiceExtensions
 
     public static void ConfigureRepositoryManager(this IServiceCollection services)
     {
-        services.AddScoped<IRepositoryManager, IRepositoryManager>();
+        services.AddScoped<IRepositoryManager, RepositoryManager>();
     }
 
-    public static void ConfigureServiceManager(this IServiceCollection services) {
+    public static void ConfigureServiceManager(this IServiceCollection services)
+    {
         services.AddScoped<IServiceManager, ServiceManager>();
     }
 }
