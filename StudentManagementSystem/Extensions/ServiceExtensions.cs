@@ -44,4 +44,9 @@ public static class ServiceExtensions
     {
         services.AddScoped<IServiceManager, ServiceManager>();
     }
+
+    public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddNpgsql<RepositoryContext>(configuration.GetConnectionString("postgresqlConnection"));
+    }
 }
