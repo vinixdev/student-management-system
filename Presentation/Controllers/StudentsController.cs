@@ -5,7 +5,7 @@ using Service.Contracts;
 namespace Presentation.Controllers;
 
 [ApiController]
-[Route("/api/students")]
+[Route("api/students")]
 public class StudentsController : ControllerBase
 {
 
