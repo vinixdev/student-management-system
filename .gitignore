@@ -3,6 +3,11 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# Internal logs
+*/internal_logs
+*/*internallog*
+*/.\\internal_logs\\internallog.txt
+
 # dotenv files
 .env
 
