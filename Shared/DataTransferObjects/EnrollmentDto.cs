@@ -1,6 +1,6 @@
 using System;
 
-namespace Shared.DataTransferObjecs;
+namespace Shared.DataTransferObjects;
 
 public record EnrollmentDto
 {

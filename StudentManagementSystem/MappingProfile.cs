@@ -1,6 +1,6 @@
 using AutoMapper;
 using Entities.Models;
-using Shared.DataTransferObjecs;
+using Shared.DataTransferObjects;
 
 namespace StudentManagementSystem;
 

@@ -1,7 +1,7 @@
 using AutoMapper;
 using Contracts;
 using Service.Contracts;
-using Shared.DataTransferObjecs;
+using Shared.DataTransferObjects;
 
 namespace Service;
 

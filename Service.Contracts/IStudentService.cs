@@ -1,5 +1,5 @@
 using System;
-using Shared.DataTransferObjecs;
+using Shared.DataTransferObjects;
 
 namespace Service.Contracts;
 
