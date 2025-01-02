@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace Presentation.Controllers;
 
@@ -19,6 +20,15 @@ public class StudentsController : ControllerBase
         var students = await _service.Student.GetAllStudentsAsync(trackChanges: false);
 
         return Ok(students);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateNewStudent([FromBody] StudentForCreationDto? studentDto)
+    {
+        if (studentDto == null) return BadRequest("StudentDto object is null.");
+        
+        await _service.Student.CreateStudent(studentDto);
+        return Created();
     }
 
 }

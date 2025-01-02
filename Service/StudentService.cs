@@ -1,5 +1,6 @@
 using AutoMapper;
 using Contracts;
+using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -29,5 +30,11 @@ public class StudentService : IStudentService
 
         return studentsDtos;
 
+    }
+
+    public async Task CreateStudent(StudentForCreationDto studentForCreationDto)
+    {
+        var studentEntity = _mapper.Map<Student>(studentForCreationDto);
+        _repository.Student.CreateStudent(studentEntity);
     }
 }

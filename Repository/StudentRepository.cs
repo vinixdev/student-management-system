@@ -16,4 +16,6 @@ public sealed class StudentRepository : RepositoryBase<Student>, IStudentReposit
     {
         return await FindAll(trackChanges).ToListAsync();
     }
+
+    public void CreateStudent(Student student) => Create(student);
 }
