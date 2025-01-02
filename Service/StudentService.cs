@@ -35,6 +35,11 @@ public class StudentService : IStudentService
     public async Task CreateStudent(StudentForCreationDto studentForCreationDto)
     {
         var studentEntity = _mapper.Map<Student>(studentForCreationDto);
+        
+        studentEntity.StdId = Guid.NewGuid().ToString("N");
+        
         _repository.Student.CreateStudent(studentEntity);
+        
+        await _repository.SaveAsync();
     }
 }

@@ -28,7 +28,7 @@ public class StudentsController : ControllerBase
         if (studentDto == null) return BadRequest("StudentDto object is null.");
         
         await _service.Student.CreateStudent(studentDto);
-        return Created();
+        return Ok("Student Created Successfully.");
     }
 
 }
