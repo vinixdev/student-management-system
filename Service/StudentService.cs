@@ -32,7 +32,7 @@ public class StudentService : IStudentService
 
     }
 
-    public async Task CreateStudent(StudentForCreationDto studentForCreationDto)
+    public async Task<StudentDto> CreateStudentAsync(StudentForCreationDto studentForCreationDto)
     {
         var studentEntity = _mapper.Map<Student>(studentForCreationDto);
         
@@ -41,5 +41,21 @@ public class StudentService : IStudentService
         _repository.Student.CreateStudent(studentEntity);
         
         await _repository.SaveAsync();
+
+        var studentDto = _mapper.Map<StudentDto>(studentEntity);
+
+        return studentDto;
+    }
+
+    public async Task<StudentDto> GetStudentAsync(Guid studentId, bool trackChanges)
+    {
+        var studentEntity = await _repository.Student.GetStudentAsync(studentId, trackChanges);
+
+        if (studentEntity == null) throw new Exception($"Student with Id {studentId} not found.");
+
+        var studentDto = _mapper.Map<StudentDto>(studentEntity);
+
+        return studentDto;
+
     }
 }

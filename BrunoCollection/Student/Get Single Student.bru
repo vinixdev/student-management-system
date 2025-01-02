@@ -1,0 +1,11 @@
+meta {
+  name: Get Single Student
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{URL}}:{{PORT}}/api/students/{{STUDENT_ID}}
+  body: none
+  auth: none
+}

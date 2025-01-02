@@ -17,5 +17,10 @@ public sealed class StudentRepository : RepositoryBase<Student>, IStudentReposit
         return await FindAll(trackChanges).ToListAsync();
     }
 
+    public async Task<Student> GetStudentAsync(Guid studentId, bool trackChanges)
+    {
+        return await FindByCondition(s => s.Id.Equals(studentId), trackChanges).SingleOrDefaultAsync();
+    }
+
     public void CreateStudent(Student student) => Create(student);
 }

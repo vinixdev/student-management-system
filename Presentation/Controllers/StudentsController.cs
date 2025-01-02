@@ -22,13 +22,22 @@ public class StudentsController : ControllerBase
         return Ok(students);
     }
 
+    [HttpGet("{studentId:guid}", Name = "GetSingleStudent")]
+    public async Task<IActionResult> GetSingleStudent(Guid studentId)
+    {
+        var studentDto = await _service.Student.GetStudentAsync(studentId, false);
+
+        return Ok(studentDto);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateNewStudent([FromBody] StudentForCreationDto? studentDto)
     {
         if (studentDto == null) return BadRequest("StudentDto object is null.");
         
-        await _service.Student.CreateStudent(studentDto);
-        return Ok("Student Created Successfully.");
+        var newStudent = await _service.Student.CreateStudentAsync(studentDto);
+        
+        return CreatedAtRoute("GetSingleStudent", new {studentId = newStudent.Id}, newStudent);
     }
 
 }

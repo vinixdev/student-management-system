@@ -5,5 +5,9 @@ namespace Service.Contracts;
 public interface IStudentService
 {
     Task<IEnumerable<StudentDto>> GetAllStudentsAsync(bool trackChanges);
-    Task CreateStudent(StudentForCreationDto studentForCreationDto);
+    
+    Task<StudentDto> GetStudentAsync(Guid studentId, bool trackChanges);
+    Task<StudentDto> CreateStudentAsync(StudentForCreationDto studentForCreationDto);
+
+    
 }
