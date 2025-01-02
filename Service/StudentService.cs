@@ -20,10 +20,10 @@ public class StudentService : IStudentService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<StudentDto>> GetAllStudents(bool trackChanges)
+    public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync(bool trackChanges)
     {
 
-        var students = await _repository.Student.GetAllStudents(trackChanges);
+        var students = await _repository.Student.GetAllStudentsAsync(trackChanges);
 
         var studentsDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
 

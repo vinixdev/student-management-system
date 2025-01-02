@@ -5,5 +5,5 @@ namespace Contracts;
 
 public interface IStudentRepository
 {
-    Task<IEnumerable<Student>> GetAllStudents(bool trackChanges);
+    Task<IEnumerable<Student>> GetAllStudentsAsync(bool trackChanges);
 }

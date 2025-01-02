@@ -12,7 +12,7 @@ public sealed class StudentRepository : RepositoryBase<Student>, IStudentReposit
     {
     }
 
-    public async Task<IEnumerable<Student>> GetAllStudents(bool trackChanges)
+    public async Task<IEnumerable<Student>> GetAllStudentsAsync(bool trackChanges)
     {
         return await FindAll(trackChanges).ToListAsync();
     }

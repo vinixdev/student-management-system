@@ -22,5 +22,5 @@ public class RepositoryManager : IRepositoryManager
     public IStudentRepository Student => _studentRepository.Value;
     public ICoruseRepository Course => _courseRepository.Value;
     public IEnrollmentRepository Entrollment => _enrollmentRepository.Value;
-    public void Save() => _repositoryContext.SaveChanges();
+    public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
 }

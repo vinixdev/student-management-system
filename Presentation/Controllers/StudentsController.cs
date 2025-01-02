@@ -16,7 +16,7 @@ public class StudentsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllStudents()
     {
-        var students = await _service.Student.GetAllStudents(trackChanges: false);
+        var students = await _service.Student.GetAllStudentsAsync(trackChanges: false);
 
         return Ok(students);
     }

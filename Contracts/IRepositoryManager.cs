@@ -4,7 +4,7 @@ namespace Contracts;
 
 public interface IRepositoryManager
 {
-    void Save();
+    Task SaveAsync();
     ICoruseRepository Course { get; }
     IEnrollmentRepository Entrollment { get; }
     IStudentRepository Student { get; }

@@ -5,5 +5,5 @@ namespace Service.Contracts;
 
 public interface IStudentService
 {
-    Task<IEnumerable<StudentDto>> GetAllStudents(bool trackChanges);
+    Task<IEnumerable<StudentDto>> GetAllStudentsAsync(bool trackChanges);
 }
