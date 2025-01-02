@@ -6,27 +6,17 @@ using Shared.DataTransferObjects;
 
 namespace Service;
 
-public class StudentService : IStudentService
+public class StudentService : ServiceBase, IStudentService
 {
+    public StudentService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper) : base(logger, repositoryManager, mapper) {}
 
-    private readonly ILoggerManager _logger;
-    private readonly IRepositoryManager _repository;
-
-    private readonly IMapper _mapper;
-
-    public StudentService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper)
-    {
-        _repository = repositoryManager;
-        _logger = logger;
-        _mapper = mapper;
-    }
 
     public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync(bool trackChanges)
     {
 
-        var students = await _repository.Student.GetAllStudentsAsync(trackChanges);
+        var students = await Repository.Student.GetAllStudentsAsync(trackChanges);
 
-        var studentsDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
+        var studentsDtos = Mapper.Map<IEnumerable<StudentDto>>(students);
 
         return studentsDtos;
 
@@ -34,26 +24,26 @@ public class StudentService : IStudentService
 
     public async Task<StudentDto> CreateStudentAsync(StudentForCreationDto studentForCreationDto)
     {
-        var studentEntity = _mapper.Map<Student>(studentForCreationDto);
+        var studentEntity = Mapper.Map<Student>(studentForCreationDto);
         
         studentEntity.StdId = Guid.NewGuid().ToString("N");
         
-        _repository.Student.CreateStudent(studentEntity);
+        Repository.Student.CreateStudent(studentEntity);
         
-        await _repository.SaveAsync();
+        await Repository.SaveAsync();
 
-        var studentDto = _mapper.Map<StudentDto>(studentEntity);
+        var studentDto = Mapper.Map<StudentDto>(studentEntity);
 
         return studentDto;
     }
 
     public async Task<StudentDto> GetStudentAsync(Guid studentId, bool trackChanges)
     {
-        var studentEntity = await _repository.Student.GetStudentAsync(studentId, trackChanges);
+        var result = await TryGetEntityAsync<Student>(studentId, trackChanges);
 
-        if (studentEntity == null) throw new Exception($"Student with Id {studentId} not found.");
+        if (!result.success) throw new Exception($"Student with Id {studentId} not found.");
 
-        var studentDto = _mapper.Map<StudentDto>(studentEntity);
+        var studentDto = Mapper.Map<StudentDto>(result.entity);
 
         return studentDto;
 
@@ -61,14 +51,12 @@ public class StudentService : IStudentService
 
     public async Task DeleteStudentAsync(Guid studentId)
     {
-        // TODO: refactor to method "Task<bool> TryGetStudent(Guid studentId, out Student? student)"
+        var result = await TryGetEntityAsync<Student>(studentId, false);
         
-        var studentEntity = await _repository.Student.GetStudentAsync(studentId, false);
+        if (!result.success) throw new Exception($"Student with Id {studentId} not found.");
+        
+        Repository.Student.DeleteStudent(result.entity);
 
-        if (studentEntity == null) throw new Exception($"Student with Id {studentId} not found.");
-        
-        _repository.Student.DeleteStudent(studentEntity);
-        
-        await _repository.SaveAsync();
+        await Repository.SaveAsync();
     }
 }
