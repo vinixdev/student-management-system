@@ -9,5 +9,6 @@ public interface IStudentService
     Task<StudentDto> GetStudentAsync(Guid studentId, bool trackChanges);
     Task<StudentDto> CreateStudentAsync(StudentForCreationDto studentForCreationDto);
 
-    
+    Task DeleteStudentAsync(Guid studentId);
+
 }

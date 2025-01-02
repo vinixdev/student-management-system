@@ -23,4 +23,6 @@ public sealed class StudentRepository : RepositoryBase<Student>, IStudentReposit
     }
 
     public void CreateStudent(Student student) => Create(student);
+
+    public void DeleteStudent(Student student) => Delete(student);
 }

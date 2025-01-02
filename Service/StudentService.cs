@@ -58,4 +58,17 @@ public class StudentService : IStudentService
         return studentDto;
 
     }
+
+    public async Task DeleteStudentAsync(Guid studentId)
+    {
+        // TODO: refactor to method "Task<bool> TryGetStudent(Guid studentId, out Student? student)"
+        
+        var studentEntity = await _repository.Student.GetStudentAsync(studentId, false);
+
+        if (studentEntity == null) throw new Exception($"Student with Id {studentId} not found.");
+        
+        _repository.Student.DeleteStudent(studentEntity);
+        
+        await _repository.SaveAsync();
+    }
 }

@@ -10,4 +10,6 @@ public interface IStudentRepository
     Task<Student> GetStudentAsync(Guid studentId, bool trackChanges);
 
     void CreateStudent(Student student);
+
+    void DeleteStudent(Student student);
 }

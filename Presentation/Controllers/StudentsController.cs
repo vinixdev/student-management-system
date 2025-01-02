@@ -40,4 +40,12 @@ public class StudentsController : ControllerBase
         return CreatedAtRoute("GetSingleStudent", new {studentId = newStudent.Id}, newStudent);
     }
 
+    [HttpDelete("{studentId:guid}")]
+    public async Task<IActionResult> DeleteStudent(Guid studentId)
+    {
+        await _service.Student.DeleteStudentAsync(studentId);
+
+        return NoContent();
+    }
+
 }
