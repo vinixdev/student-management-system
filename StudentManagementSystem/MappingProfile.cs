@@ -1,5 +1,6 @@
 using AutoMapper;
 using Entities.Models;
+using Shared;
 using Shared.DataTransferObjects;
 
 namespace StudentManagementSystem;
@@ -11,7 +12,8 @@ public class MappingProfile : Profile
         CreateMap<Student, StudentDto>();
         CreateMap<Course, CourseDto>();
         CreateMap<Enrollment, EnrollmentDto>();
-        
+
+        CreateMap<StudentForUpdateDto, Student>();
         CreateMap<StudentForCreationDto, Student>();
     }
 }

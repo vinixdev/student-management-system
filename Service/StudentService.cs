@@ -2,6 +2,7 @@ using AutoMapper;
 using Contracts;
 using Entities.Models;
 using Service.Contracts;
+using Shared;
 using Shared.DataTransferObjects;
 
 namespace Service;
@@ -47,9 +48,13 @@ public class StudentService : ServiceBase, IStudentService
 
     }
 
-    public async Task UpdateStudentAsync(Guid StudentId, StudentForModificationDto studentForModificationDto, bool trackChanges)
+    public async Task UpdateStudentAsync(Guid studentId, StudentForUpdateDto studentForUpdate, bool trackChanges)
     {
-        
+        var studentEntity = await TryGetEntityAsync<Student>(studentId, trackChanges);
+
+        Mapper.Map(studentForUpdate, studentEntity);
+
+        await Repository.SaveAsync();
     }
 
     public async Task DeleteStudentAsync(Guid studentId)

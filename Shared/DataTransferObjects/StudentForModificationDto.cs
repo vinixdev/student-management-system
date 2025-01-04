@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shared.DataTransferObjects;
 
-public record StudentForModificationDto
+public abstract record StudentForModificationDto
 {
         
     [Required]
