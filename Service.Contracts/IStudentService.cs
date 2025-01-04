@@ -12,6 +12,8 @@ public interface IStudentService
 
     Task UpdateStudentAsync(Guid studentId, StudentForUpdateDto studentForUpdate, bool trackChanges);
 
+    Task UpdatePartialStudentAsync(Guid studentId, bool trackChanges);
+
     Task DeleteStudentAsync(Guid studentId);
 
 }

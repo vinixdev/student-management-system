@@ -57,6 +57,11 @@ public class StudentService : ServiceBase, IStudentService
         await Repository.SaveAsync();
     }
 
+    public async Task UpdatePartialStudentAsync(Guid studentId, bool trackChanges)
+    {
+        
+    }
+
     public async Task DeleteStudentAsync(Guid studentId)
     {
         var studentEntity = await TryGetEntityAsync<Student>(studentId, false);
