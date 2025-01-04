@@ -53,7 +53,7 @@ public class StudentService : ServiceBase, IStudentService
         var studentEntity = await TryGetEntityAsync<Student>(studentId, trackChanges);
 
         Mapper.Map(studentForUpdate, studentEntity);
-
+        
         await Repository.SaveAsync();
     }
 

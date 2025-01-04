@@ -1,0 +1,20 @@
+meta {
+  name: Update Student
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{URL}}:{{PORT}}/api/students/{{STUDENT_ID}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "firstName": "SpongeBob",
+    "lastName": "SquarePants",
+    "email": "spongebob@squarepants.com",
+    "birthDate": "1986-07-14"
+  }
+}

@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared;
 using Shared.DataTransferObjects;
 
 namespace Presentation.Controllers;
@@ -38,6 +39,16 @@ public class StudentsController : ControllerBase
         var newStudent = await _service.Student.CreateStudentAsync(studentDto);
         
         return CreatedAtRoute("GetSingleStudent", new {studentId = newStudent.Id}, newStudent);
+    }
+
+    [HttpPut("{studentId:guid}")]
+    public async Task<IActionResult> UpdateStudent(Guid studentId, [FromBody] StudentForUpdateDto? studentForUpdateDto)
+    {
+        if (studentForUpdateDto == null) return BadRequest("StudentForUpdateDto is null.");
+        
+        await _service.Student.UpdateStudentAsync(studentId, studentForUpdateDto, true);
+        
+        return NoContent();
     }
 
     [HttpDelete("{studentId:guid}")]
