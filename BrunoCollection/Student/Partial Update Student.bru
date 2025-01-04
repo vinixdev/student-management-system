@@ -1,0 +1,21 @@
+meta {
+  name: Partial Update Student
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{URL}}:{{PORT}}/api/students/{{STUDENT_ID}}
+  body: json
+  auth: none
+}
+
+body:json {
+  [
+    {
+      "op": "replace",
+      "path": "/BirthDate",
+      "value": "1986-07-14"
+    }
+  ]
+}

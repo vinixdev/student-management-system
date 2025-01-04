@@ -13,7 +13,7 @@ public class MappingProfile : Profile
         CreateMap<Course, CourseDto>();
         CreateMap<Enrollment, EnrollmentDto>();
 
-        CreateMap<StudentForUpdateDto, Student>();
+        CreateMap<StudentForUpdateDto, Student>().ReverseMap();
         CreateMap<StudentForCreationDto, Student>();
     }
 }

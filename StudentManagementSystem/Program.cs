@@ -20,7 +20,8 @@ builder.Services.AddControllers()
     .AddJsonOptions(opt =>
     {
         opt.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-    });
+    })
+    .AddNewtonsoftJson();
 
 var app = builder.Build();
 
