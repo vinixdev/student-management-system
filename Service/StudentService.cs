@@ -47,6 +47,11 @@ public class StudentService : ServiceBase, IStudentService
 
     }
 
+    public async Task UpdateStudentAsync(Guid StudentId, StudentForModificationDto studentForModificationDto, bool trackChanges)
+    {
+        
+    }
+
     public async Task DeleteStudentAsync(Guid studentId)
     {
         var studentEntity = await TryGetEntityAsync<Student>(studentId, false);
