@@ -18,7 +18,7 @@ public class ServiceBase
         Mapper = mapper;
     }
 
-    protected async Task<(bool success, TEntity? entity)> TryGetEntityAsync<TEntity>(Guid entityId, bool trackChanges) where TEntity: class
+    protected async Task<TEntity> TryGetEntityAsync<TEntity>(Guid entityId, bool trackChanges) where TEntity: class
     {
         var entity =  typeof(TEntity) switch
         {
@@ -26,8 +26,10 @@ public class ServiceBase
             { } t when t == typeof(Student) => await Repository.Student.GetStudentAsync(entityId, trackChanges),
             _ => null
         };
-
-        return (entity != null, entity as TEntity);
+        
+        return entity as TEntity ?? throw new Exception($"{typeof(TEntity).Name} with Id {entityId} not found.");;
     }
+    
+    // TODO: Update with PUT and PATCH also Collection creation
     
 }

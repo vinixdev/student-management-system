@@ -39,11 +39,9 @@ public class StudentService : ServiceBase, IStudentService
 
     public async Task<StudentDto> GetStudentAsync(Guid studentId, bool trackChanges)
     {
-        var result = await TryGetEntityAsync<Student>(studentId, trackChanges);
+        var studentEntity = await TryGetEntityAsync<Student>(studentId, trackChanges);
 
-        if (!result.success) throw new Exception($"Student with Id {studentId} not found.");
-
-        var studentDto = Mapper.Map<StudentDto>(result.entity);
+        var studentDto = Mapper.Map<StudentDto>(studentEntity);
 
         return studentDto;
 
@@ -51,11 +49,9 @@ public class StudentService : ServiceBase, IStudentService
 
     public async Task DeleteStudentAsync(Guid studentId)
     {
-        var result = await TryGetEntityAsync<Student>(studentId, false);
+        var studentEntity = await TryGetEntityAsync<Student>(studentId, false);
         
-        if (!result.success) throw new Exception($"Student with Id {studentId} not found.");
-        
-        Repository.Student.DeleteStudent(result.entity);
+        Repository.Student.DeleteStudent(studentEntity);
 
         await Repository.SaveAsync();
     }
