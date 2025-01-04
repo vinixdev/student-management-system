@@ -1,4 +1,4 @@
-using System;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared;
@@ -49,6 +49,23 @@ public class StudentsController : ControllerBase
         await _service.Student.UpdateStudentAsync(studentId, studentForUpdateDto, true);
         
         return NoContent();
+    }
+    
+    [HttpPatch("{studentId:guid}")]
+    public async Task<IActionResult> UpdatePartialStudent(Guid studentId,
+        [FromBody] JsonPatchDocument<StudentForUpdateDto>? studentPatch)
+    {
+
+        if (studentPatch == null) return BadRequest("StudentPatch is null.");
+        
+        var result = await _service.Student.GetStudentForPatch(studentId, true);
+        
+        studentPatch.ApplyTo(result.studentPatch, ModelState);
+
+        await _service.Student.SavePatchedStudent(result.studentPatch, result.studentEntity);
+
+        return NoContent();
+
     }
 
     [HttpDelete("{studentId:guid}")]
