@@ -1,3 +1,4 @@
+using Entities.Models;
 using Shared;
 using Shared.DataTransferObjects;
 
@@ -12,7 +13,9 @@ public interface IStudentService
 
     Task UpdateStudentAsync(Guid studentId, StudentForUpdateDto studentForUpdate, bool trackChanges);
 
-    Task UpdatePartialStudentAsync(Guid studentId, bool trackChanges);
+    Task<(StudentForUpdateDto studentPatch, Student studentEntity)> GetStudentForPatch(Guid studentId, bool trackChanges);
+
+    Task SavePatchedStudent(StudentForUpdateDto studentPatch, Student studentEntity);
 
     Task DeleteStudentAsync(Guid studentId);
 

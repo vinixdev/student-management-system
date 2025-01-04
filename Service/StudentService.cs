@@ -57,9 +57,19 @@ public class StudentService : ServiceBase, IStudentService
         await Repository.SaveAsync();
     }
 
-    public async Task UpdatePartialStudentAsync(Guid studentId, bool trackChanges)
+    public async Task<(StudentForUpdateDto studentPatch, Student studentEntity)> GetStudentForPatch(Guid studentId, bool trackChanges)
     {
+        var studentEntity = await TryGetEntityAsync<Student>(studentId, trackChanges);
+
+        var studentPatch = Mapper.Map<StudentForUpdateDto>(studentEntity);
         
+        return (studentPatch, studentEntity);
+    }
+
+    public async Task SavePatchedStudent(StudentForUpdateDto studentPatch, Student studentEntity)
+    {
+        Mapper.Map(studentPatch, studentEntity);
+        await Repository.SaveAsync();
     }
 
     public async Task DeleteStudentAsync(Guid studentId)
