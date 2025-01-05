@@ -23,4 +23,6 @@ public class Student
     public required string StdId { get; set; }
 
     public DateOnly? BirthDate { get; set; }
+    
+    public ICollection<Course>? Courses { get; set; }
 }
