@@ -8,4 +8,5 @@ public interface ICourseService
     Task<IEnumerable<CourseDto>> GetAllCourses(bool trackChanges);
     Task<CourseDto> GetCourseAsync(Guid courseId, bool trackChanges);
     Task<CourseDto> CreateCourseAsync(CourseForCreationDto courseForCreationDto);
+    Task DeleteCourseAsync(Guid courseId);
 }
