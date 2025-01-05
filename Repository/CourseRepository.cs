@@ -19,4 +19,6 @@ public sealed class CoruseRipository : RepositoryBase<Course>, ICoruseRepository
     {
         return await FindByCondition(c => c.Id.Equals(courseId), trackChanges).SingleOrDefaultAsync();
     }
+
+    public void CreateCourse(Course course) => Create(course);
 }
