@@ -28,4 +28,17 @@ public class CourseService : ServiceBase, ICourseService
 
         return courseDto;
     }
+
+    public async Task<CourseDto> CreateCourseAsync(CourseForCreationDto courseForCreationDto)
+    {
+        var courseEntity = Mapper.Map<Course>(courseForCreationDto);
+        
+        Repository.Course.CreateCourse(courseEntity);
+        
+        await Repository.SaveAsync();
+
+        var courseDto = Mapper.Map<CourseDto>(courseEntity);
+
+        return courseDto;
+    }
 }
