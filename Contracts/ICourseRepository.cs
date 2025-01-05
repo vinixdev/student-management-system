@@ -5,5 +5,5 @@ namespace Contracts;
 
 public interface ICoruseRepository
 {
-    Task<IEnumerable<Course>> GetAllCourses();
+    Task<IEnumerable<Course>> GetAllCourses(bool trackChanges);
 }
