@@ -8,5 +8,13 @@ public class EnrollmentRepository : RepositoryBase<Enrollment>, IEnrollmentRepos
 {
     public EnrollmentRepository(RepositoryContext repositoryContext) : base(repositoryContext) { }
     public void CreateEnrollment(Enrollment enrollment) => Create(enrollment);
+    public Task<Enrollment>? GetEnrollment(Guid enrollmentId)
+    {
+        throw new NotImplementedException();
+    }
 
+    public void DeleteEnrollment(Enrollment enrollment)
+    {
+        throw new NotImplementedException();
+    }
 }
