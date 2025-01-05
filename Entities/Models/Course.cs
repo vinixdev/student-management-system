@@ -17,5 +17,5 @@ public class Course
 
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
     
-    public ICollection<Student>? Students { get; set; }
+    public ICollection<Enrollment>? Enrollments { get; set; }
 }

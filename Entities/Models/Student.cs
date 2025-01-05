@@ -24,5 +24,5 @@ public class Student
 
     public DateOnly? BirthDate { get; set; }
     
-    public ICollection<Course>? Courses { get; set; }
+    public ICollection<Enrollment>? Enrollments { get; set; }
 }
