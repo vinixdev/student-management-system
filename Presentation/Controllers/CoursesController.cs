@@ -38,4 +38,11 @@ public class CoursesController: ControllerBase
         return CreatedAtRoute("GetSingleCourse", new { courseId = course.Id }, course);
 
     }
+
+    [HttpDelete("{courseId:guid}")]
+    public async Task<IActionResult> DeleteCourse(Guid courseId)
+    {
+        await _service.Course.DeleteCourseAsync(courseId);
+        return NoContent();
+    }
 }
