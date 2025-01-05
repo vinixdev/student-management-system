@@ -20,16 +20,17 @@ public class ServiceBase
 
     protected async Task<TEntity> TryGetEntityAsync<TEntity>(Guid entityId, bool trackChanges) where TEntity: class
     {
-        var entity =  typeof(TEntity) switch
-        {
-            
-            { } t when t == typeof(Student) => await Repository.Student.GetStudentAsync(entityId, trackChanges),
-            _ => null
-        };
+        object? entity = null;
+        
+        if (typeof(TEntity) == typeof(Student)) 
+            entity = await Repository.Student.GetStudentAsync(entityId, trackChanges);
+        
+        else if (typeof(TEntity) == typeof(Course))
+            entity = await Repository.Course.GetCourseAsync(entityId, trackChanges);
         
         return entity as TEntity ?? throw new Exception($"{typeof(TEntity).Name} with Id {entityId} not found.");;
     }
     
-    // TODO: Update with PUT and PATCH also Collection creation
+    // TODO: Collection creation For Entities
     
 }
