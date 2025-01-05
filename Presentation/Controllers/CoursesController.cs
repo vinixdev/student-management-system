@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -55,6 +56,21 @@ public class CoursesController: ControllerBase
 
         return Ok(updatedCourse);
 
+    }
+
+    [HttpPatch("{courseId:guid}")]
+    public async Task<IActionResult> PartialUpdateCourse(Guid courseId,
+        [FromBody] JsonPatchDocument<CourseForUpdateDto>? courseForUpdateDto)
+    {
+        if (courseForUpdateDto == null) return BadRequest("courseForUpdateDto is null.");
+
+        var result = await _service.Course.GetCourseForPatchAsync(courseId, trackChanges: true);
+        
+        courseForUpdateDto.ApplyTo(result.courseForUpdateDto, ModelState);
+
+        await _service.Course.SavePatchedCourseAsync(result.courseForUpdateDto, result.courseEntity);
+
+        return NoContent();
     }
     
 }

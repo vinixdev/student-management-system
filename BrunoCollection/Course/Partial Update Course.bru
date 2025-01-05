@@ -1,0 +1,21 @@
+meta {
+  name: Partial Update Course
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{URL}}:{{PORT}}/api/courses/{{COURSE_ID}}
+  body: json
+  auth: none
+}
+
+body:json {
+  [
+    {
+      "op": "replace",
+      "path": "/Instructor",
+      "value": "Sandy Cheeks"
+    }
+  ]
+}
