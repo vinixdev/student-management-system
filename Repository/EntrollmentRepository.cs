@@ -7,4 +7,6 @@ namespace Repository;
 public class EnrollmentRepository : RepositoryBase<Enrollment>, IEnrollmentRepository
 {
     public EnrollmentRepository(RepositoryContext repositoryContext) : base(repositoryContext) { }
+    public void CreateEnrollment(Enrollment enrollment) => Create(enrollment);
+
 }
