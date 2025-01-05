@@ -1,5 +1,6 @@
 using AutoMapper;
 using Contracts;
+using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 

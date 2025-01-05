@@ -6,5 +6,5 @@ namespace Contracts;
 public interface ICoruseRepository
 {
     Task<IEnumerable<Course>> GetAllCourses(bool trackChanges);
-    Task<Course?> GetCourse(Guid courseId, bool trackChanges);
+    Task<Course?> GetCourseAsync(Guid courseId, bool trackChanges);
 }

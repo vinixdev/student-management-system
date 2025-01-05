@@ -15,7 +15,7 @@ public sealed class CoruseRipository : RepositoryBase<Course>, ICoruseRepository
         return await courses.ToListAsync();
     }
 
-    public async Task<Course?> GetCourse(Guid courseId, bool trackChanges)
+    public async Task<Course?> GetCourseAsync(Guid courseId, bool trackChanges)
     {
         return await FindByCondition(c => c.Id.Equals(courseId), trackChanges).SingleOrDefaultAsync();
     }
