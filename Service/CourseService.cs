@@ -19,4 +19,13 @@ public class CourseService : ServiceBase, ICourseService
 
         return courses;
     }
+
+    public async Task<CourseDto> GetCourseAsync(Guid courseId, bool trackChanges)
+    {
+        var courseEntity = await TryGetEntityAsync<Course>(courseId, trackChanges);
+
+        var courseDto = Mapper.Map<CourseDto>(courseEntity);
+
+        return courseDto;
+    }
 }
