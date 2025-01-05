@@ -18,5 +18,7 @@ public class MappingProfile : Profile
 
         CreateMap<CourseForCreationDto, Course>();
         CreateMap<CourseForUpdateDto, Course>().ReverseMap();
+
+        CreateMap<EnrollmentForCreationDto, Enrollment>();
     }
 }
