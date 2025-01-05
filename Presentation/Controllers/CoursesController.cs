@@ -18,4 +18,12 @@ public class CoursesController: ControllerBase
 
         return Ok(courses);
     }
+
+    [HttpGet("{courseId:guid}")]
+    public async Task<IActionResult> GetSingleCourse(Guid courseId)
+    {
+        var course = await _service.Course.GetCourseAsync(courseId, trackChanges:false);
+
+        return Ok(course);
+    }
 }
