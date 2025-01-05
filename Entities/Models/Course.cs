@@ -15,5 +15,5 @@ public class Course
     [MaxLength(60, ErrorMessage = "Maximum length of Instructor is 60")]
     public required string Instructor { get; set; }
 
-    public DateTime CreatedAt { get; init; } = DateTime.Now;
+    public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 }

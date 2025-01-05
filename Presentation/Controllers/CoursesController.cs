@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace Presentation.Controllers;
 [ApiController]
@@ -19,11 +20,22 @@ public class CoursesController: ControllerBase
         return Ok(courses);
     }
 
-    [HttpGet("{courseId:guid}")]
+    [HttpGet("{courseId:guid}", Name = "GetSingleCourse")]
     public async Task<IActionResult> GetSingleCourse(Guid courseId)
     {
         var course = await _service.Course.GetCourseAsync(courseId, trackChanges:false);
 
         return Ok(course);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateCourse([FromBody] CourseForCreationDto? courseForCreationDto)
+    {
+        if (courseForCreationDto == null) return BadRequest("courseForCreationDto is null.");
+
+        var course = await _service.Course.CreateCourseAsync(courseForCreationDto);
+
+        return CreatedAtRoute("GetSingleCourse", new { courseId = course.Id }, course);
+
     }
 }

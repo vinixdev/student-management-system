@@ -1,0 +1,18 @@
+meta {
+  name: Create Course
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{URL}}:{{PORT}}/api/courses
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Introduction to Data Structures and Algorithms",
+    "instructor": "Mrs. Puff"
+  }
+}
