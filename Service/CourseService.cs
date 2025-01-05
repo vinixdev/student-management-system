@@ -1,19 +1,21 @@
 using AutoMapper;
 using Contracts;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace Service;
 
-public class CourseService : ICourseService
+public class CourseService : ServiceBase, ICourseService
 {
-    private readonly ILoggerManager _logger;
-    private readonly IRepositoryManager _repository;
-    private readonly IMapper _mapper;
+    public CourseService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper) : base(logger,
+        repositoryManager, mapper) { }
 
-    public CourseService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper)
+    public async Task<IEnumerable<CourseDto>> GetAllCourses(bool trackChanges)
     {
-        _repository = repositoryManager;
-        _logger = logger;
-        _mapper = mapper;
+        var courseEntities = await Repository.Course.GetAllCourses(trackChanges);
+
+        var courses = Mapper.Map<IEnumerable<CourseDto>>(courseEntities);
+
+        return courses;
     }
 }
