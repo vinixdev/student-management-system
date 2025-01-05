@@ -41,4 +41,13 @@ public class CourseService : ServiceBase, ICourseService
 
         return courseDto;
     }
+
+    public async Task DeleteCourseAsync(Guid courseId)
+    {
+        var courseEntity = await TryGetEntityAsync<Course>(courseId, false);
+        
+        Repository.Course.DeleteCourse(courseEntity);
+
+        await Repository.SaveAsync();
+    }
 }
