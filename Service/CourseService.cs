@@ -63,4 +63,19 @@ public class CourseService : ServiceBase, ICourseService
 
         return courseDto;
     }
+
+    public async Task<(CourseForUpdateDto courseForUpdateDto, Course courseEntity)> GetCourseForPatchAsync(Guid courseId, bool trackChanges)
+    {
+        var courseEntity = await TryGetEntityAsync<Course>(courseId, trackChanges);
+
+        var courseForUpdate = Mapper.Map<CourseForUpdateDto>(courseEntity);
+
+        return (courseForUpdate, courseEntity);
+    }
+
+    public async Task SavePatchedCourseAsync(CourseForUpdateDto courseForUpdateDto, Course courseEntity)
+    {
+        Mapper.Map(courseForUpdateDto, courseEntity);
+        await Repository.SaveAsync();
+    }
 }
