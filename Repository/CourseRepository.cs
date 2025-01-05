@@ -21,4 +21,5 @@ public sealed class CoruseRipository : RepositoryBase<Course>, ICoruseRepository
     }
 
     public void CreateCourse(Course course) => Create(course);
+    public void DeleteCourse(Course course) => Delete(course);
 }
