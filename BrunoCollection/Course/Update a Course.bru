@@ -1,0 +1,18 @@
+meta {
+  name: Update a Course
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{URL}}:{{PORT}}/api/courses/{{COURSE_ID}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Introduction to Data Structures and Algorithms",
+    "instructor": "Sandy Cheeks"
+  }
+}

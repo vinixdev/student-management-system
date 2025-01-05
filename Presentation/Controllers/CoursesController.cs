@@ -45,4 +45,16 @@ public class CoursesController: ControllerBase
         await _service.Course.DeleteCourseAsync(courseId);
         return NoContent();
     }
+
+    [HttpPut("{courseId:guid}")]
+    public async Task<IActionResult> UpdateCourse(Guid courseId, [FromBody] CourseForUpdateDto? courseForUpdateDto)
+    {
+        if (courseForUpdateDto == null) return BadRequest("courseForUpdateDto is null.");
+
+        var updatedCourse = await _service.Course.UpdateCourseAsync(courseId, courseForUpdateDto, trackChanges: true);
+
+        return Ok(updatedCourse);
+
+    }
+    
 }
