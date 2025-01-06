@@ -78,4 +78,9 @@ public class CourseService : ServiceBase, ICourseService
         Mapper.Map(courseForUpdateDto, courseEntity);
         await Repository.SaveAsync();
     }
+
+    public Task<IEnumerable<StudentDto>> GetCourseStudentsAsync(Guid courseId, bool trackChanges)
+    {
+        throw new NotImplementedException();
+    }
 }
