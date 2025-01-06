@@ -30,7 +30,7 @@ public class GlobalErrorHandler: IExceptionHandler
             {
                 StatusCode = httpContext.Response.StatusCode,
                 Message = contextFeature.Error.Message
-            }.ToString());
+            }.ToString(), cancellationToken: cancellationToken);
         }
         return true;
     }
