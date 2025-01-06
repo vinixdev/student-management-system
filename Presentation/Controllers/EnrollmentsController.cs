@@ -15,6 +15,14 @@ public class EnrollmentsController: ControllerBase
     {
         await _service.Enrollment.CreateEnrollment(studentId, courseId, enrollmentForCreationDto);
 
+        return Created();
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteEnrollment(Guid studentId, Guid courseId)
+    {
+        await _service.Enrollment.DeleteEnrollmentAsync(studentId, courseId, false);
+
         return NoContent();
     }
 }

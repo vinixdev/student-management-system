@@ -1,0 +1,11 @@
+meta {
+  name: Delete Enrollment
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{URL}}:{{PORT}}/api/students/{{STUDENT_ID}}/courses/{{COURSE_ID}}
+  body: none
+  auth: none
+}
