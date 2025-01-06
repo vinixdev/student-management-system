@@ -1,5 +1,6 @@
 using System;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +32,7 @@ public sealed class StudentRepository : RepositoryBase<Student>, IStudentReposit
     {
         var idsList = studentIds.ToList();
 
-        if (!idsList.Any()) throw new Exception("Ids list is empty");
+        if (!idsList.Any()) throw new IdsCollectionEmpty();
 
         List<Student> students = new List<Student>();
 

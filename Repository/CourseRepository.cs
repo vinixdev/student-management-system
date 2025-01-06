@@ -1,5 +1,6 @@
 using System;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +26,7 @@ public sealed class CoruseRipository : RepositoryBase<Course>, ICoruseRepository
     public async Task<IEnumerable<Course>> GetCoursesByIdsAsync(IEnumerable<Guid> courseIds, bool trackChanges)
     {
         var idsList = courseIds.ToList();
-        if (!idsList.Any()) throw new Exception("no ids in the collection");
+        if (!idsList.Any()) throw new IdsCollectionEmpty();
 
         List<Course> courses = new List<Course>();
 

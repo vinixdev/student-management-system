@@ -1,5 +1,6 @@
 using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -33,7 +34,7 @@ public class EnrollmentService : ServiceBase, IEnrollmentService
     {
         var enrollmentEntity = await Repository.Entrollment.GetEnrollmentAsync(studentId, courseId, trackChanges);
 
-        if (enrollmentEntity == null) throw new Exception("Enrollment does not exits.");
+        if (enrollmentEntity == null) throw new EnrollmentNotFound();
         
         Repository.Entrollment.DeleteEnrollment(enrollmentEntity);
 

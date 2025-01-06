@@ -1,5 +1,6 @@
 using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 
 namespace Service;
@@ -28,11 +29,11 @@ public class ServiceBase
         else if (typeof(TEntity) == typeof(Course))
             entity = await Repository.Course.GetCourseAsync(entityId, trackChanges);
         
-        return entity as TEntity ?? throw new Exception($"{typeof(TEntity).Name} with Id {entityId} not found.");;
+        return entity as TEntity ?? throw new EntityNotFound(typeof(TEntity).Name, entityId);
     }
     
     // TODO: Collection creation For Entities
-    // TODO: Validation
+    // TODO: Validation(I use Global Filter instead of ActionFilter Level)
     // TODO: Global error handling
     
 }
