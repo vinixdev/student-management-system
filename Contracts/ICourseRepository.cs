@@ -9,5 +9,5 @@ public interface ICoruseRepository
     Task<Course?> GetCourseAsync(Guid courseId, bool trackChanges);
     void CreateCourse(Course course);
     void DeleteCourse(Course course);
-    Task<IEnumerable<Course>> GetCoursesByIds(IEnumerable<Guid> courseIds, bool trackChanges);
+    Task<IEnumerable<Course>> GetCoursesByIdsAsync(IEnumerable<Guid> courseIds, bool trackChanges);
 }
