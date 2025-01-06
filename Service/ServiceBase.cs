@@ -32,5 +32,7 @@ public class ServiceBase
     }
     
     // TODO: Collection creation For Entities
+    // TODO: Validation
+    // TODO: Global error handling
     
 }

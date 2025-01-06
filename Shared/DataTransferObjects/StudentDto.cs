@@ -9,5 +9,4 @@ public record StudentDto
     public required string LastName { get; set; }
     public required string Email { get; set; }
     public DateOnly? BirthDate { get; set; }
-    // TODO: Display courses in which a student is enrolled
 }
