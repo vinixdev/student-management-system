@@ -13,8 +13,6 @@ public class EnrollmentRepository : RepositoryBase<Enrollment>, IEnrollmentRepos
     {
         return await FindByCondition(e => e.StudentId.Equals(studentId) && e.CourseId.Equals(courseId), trackChanges).SingleOrDefaultAsync();
     }
-    public void DeleteEnrollment(Enrollment enrollment)
-    {
-        throw new NotImplementedException();
-    }
+
+    public void DeleteEnrollment(Enrollment enrollment) => Delete(enrollment);
 }
