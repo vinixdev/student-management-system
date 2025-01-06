@@ -6,7 +6,7 @@ namespace Contracts;
 public interface IEnrollmentRepository
 {
     void CreateEnrollment(Enrollment enrollment);
-    Task<Enrollment?> GetEnrollment(Guid studentId, Guid courseId, bool trackChanges);
+    Task<Enrollment?> GetEnrollmentAsync(Guid studentId, Guid courseId, bool trackChanges);
     void DeleteEnrollment(Enrollment enrollment);
     
 

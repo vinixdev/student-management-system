@@ -23,4 +23,14 @@ public class EnrollmentService : ServiceBase, IEnrollmentService
 
         await Repository.SaveAsync();
     }
+    public async Task DeleteEnrollmentAsync(Guid studentId, Guid courseId, bool trackChanges)
+    {
+        var enrollmentEntity = await Repository.Entrollment.GetEnrollmentAsync(studentId, courseId, trackChanges);
+
+        if (enrollmentEntity == null) throw new Exception("Enrollment does not exits.");
+        
+        Repository.Entrollment.DeleteEnrollment(enrollmentEntity);
+
+        await Repository.SaveAsync();
+    }
 }

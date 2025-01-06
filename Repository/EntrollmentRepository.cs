@@ -9,7 +9,7 @@ public class EnrollmentRepository : RepositoryBase<Enrollment>, IEnrollmentRepos
 {
     public EnrollmentRepository(RepositoryContext repositoryContext) : base(repositoryContext) { }
     public void CreateEnrollment(Enrollment enrollment) => Create(enrollment);
-    public async Task<Enrollment?> GetEnrollment(Guid studentId, Guid courseId, bool trackChanges)
+    public async Task<Enrollment?> GetEnrollmentAsync(Guid studentId, Guid courseId, bool trackChanges)
     {
         return await FindByCondition(e => e.StudentId.Equals(studentId) && e.CourseId.Equals(courseId), trackChanges).SingleOrDefaultAsync();
     }
