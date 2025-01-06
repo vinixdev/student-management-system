@@ -10,10 +10,4 @@ public record EnrollmentForCreationDto
     public DateTime JoinedAt { get; init; } = DateTime.UtcNow;
 
     public DateTime? EndedAt { get; set; }
-
-    [Required(ErrorMessage = "StudentId is required.")]
-    public Guid StudentId { get; set; }
-
-    [Required(ErrorMessage = "CourseId is required.")]
-    public Guid CourseId { get; set; }
 }

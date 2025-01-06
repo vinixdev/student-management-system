@@ -12,9 +12,12 @@ public class EnrollmentService : ServiceBase, IEnrollmentService
     {
     }
 
-    public async Task CreateEnrollment(EnrollmentForCreationDto enrollmentForCreationDto)
+    public async Task CreateEnrollment(Guid studentId, Guid courseId, EnrollmentForCreationDto? enrollmentForCreationDto)
     {
         var enrollmentEntity = Mapper.Map<Enrollment>(enrollmentForCreationDto);
+
+        enrollmentEntity.StudentId = studentId;
+        enrollmentEntity.CourseId = courseId;
         
         Repository.Entrollment.CreateEnrollment(enrollmentEntity);
 

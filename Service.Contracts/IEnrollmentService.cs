@@ -5,5 +5,5 @@ namespace Service.Contracts;
 
 public interface IEnrollmentService
 {
-    Task CreateEnrollment(EnrollmentForCreationDto enrollmentForCreationDto);
+    Task CreateEnrollment(Guid studentId, Guid courseId, EnrollmentForCreationDto? enrollmentForCreationDto);
 }

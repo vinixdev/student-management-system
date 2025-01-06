@@ -11,13 +11,9 @@ public class EnrollmentsController: ControllerBase
     public EnrollmentsController(IServiceManager service) => _service = service;
 
     [HttpPost]
-    public async Task<IActionResult> StudentEnrollCourse(Guid studentId, Guid courseId)
+    public async Task<IActionResult> StudentEnrollCourse(Guid studentId, Guid courseId, [FromBody] EnrollmentForCreationDto? enrollmentForCreationDto)
     {
-        var enrollmentForCreationDto = new EnrollmentForCreationDto();
-        enrollmentForCreationDto.StudentId = studentId;
-        enrollmentForCreationDto.CourseId = courseId;
-
-        await _service.Enrollment.CreateEnrollment(enrollmentForCreationDto);
+        await _service.Enrollment.CreateEnrollment(studentId, courseId, enrollmentForCreationDto);
 
         return NoContent();
     }
