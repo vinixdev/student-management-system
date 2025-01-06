@@ -19,4 +19,6 @@ public interface IStudentService
 
     Task DeleteStudentAsync(Guid studentId);
 
+    Task GetStudentCoursesAsync(Guid studentId, bool trackChanges);
+
 }

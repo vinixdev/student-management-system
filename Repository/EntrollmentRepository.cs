@@ -14,7 +14,7 @@ public class EnrollmentRepository : RepositoryBase<Enrollment>, IEnrollmentRepos
         return await FindByCondition(e => e.StudentId.Equals(studentId) && e.CourseId.Equals(courseId), trackChanges).SingleOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Enrollment>> GetEnrollmentsByStudentId(Guid studentId, bool trackChanges)
+    public async Task<IEnumerable<Enrollment>> GetEnrollmentsByStudentIdAsync(Guid studentId, bool trackChanges)
     {
         return await FindByCondition(e => e.StudentId.Equals(studentId), trackChanges).ToListAsync();
     }
