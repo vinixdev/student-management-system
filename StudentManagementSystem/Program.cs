@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using Presentation.ActionFilters;
 using StudentManagementSystem.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +21,10 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.SuppressModelStateInvalidFilter = true;
 });
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(opt =>
+    {
+        opt.Filters.Add<ValidationFilterAttribute>();
+    })
     .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
     .AddJsonOptions(opt =>
     {
