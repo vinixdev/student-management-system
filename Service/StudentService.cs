@@ -80,8 +80,18 @@ public class StudentService : ServiceBase, IStudentService
 
         await Repository.SaveAsync();
     }
-    public async Task GetStudentCoursesAsync(Guid studentId, bool trackChanges)
+    public async Task<IEnumerable<CourseDto>> GetStudentCoursesAsync(Guid studentId, bool trackChanges)
     {
-        throw new NotImplementedException();
+        await TryGetEntityAsync<Student>(studentId, trackChanges);
+
+        var studentEnrollments = await Repository.Entrollment.GetEnrollmentsByStudentIdAsync(studentId, trackChanges);
+
+        var courseIds = studentEnrollments.Select(e => e.CourseId).ToList();
+
+        var courses = await Repository.Course.GetCoursesByIdsAsync(courseIds, trackChanges);
+
+        var coursesToReturn = Mapper.Map<IEnumerable<CourseDto>>(courses);
+
+        return coursesToReturn;
     }
 }
