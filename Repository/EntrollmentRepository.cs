@@ -14,9 +14,9 @@ public class EnrollmentRepository : RepositoryBase<Enrollment>, IEnrollmentRepos
         return await FindByCondition(e => e.StudentId.Equals(studentId) && e.CourseId.Equals(courseId), trackChanges).SingleOrDefaultAsync();
     }
 
-    public Task<IEnumerable<Enrollment>> GetEnrollmentsByStudentId(Guid studentId, bool trackChanges)
+    public async Task<IEnumerable<Enrollment>> GetEnrollmentsByStudentId(Guid studentId, bool trackChanges)
     {
-        throw new NotImplementedException();
+        return await FindByCondition(e => e.StudentId.Equals(studentId), trackChanges).ToListAsync();
     }
 
     public void DeleteEnrollment(Enrollment enrollment) => Delete(enrollment);
