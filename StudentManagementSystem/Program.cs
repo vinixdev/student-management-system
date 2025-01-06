@@ -23,7 +23,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 builder.Services.AddControllers(opt =>
     {
-        opt.Filters.Add<ValidationFilterAttribute>();
+        opt.Filters.Add(new ValidationFilterAttribute());
     })
     .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
     .AddJsonOptions(opt =>
