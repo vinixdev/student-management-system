@@ -1,4 +1,3 @@
-using System;
 using Entities.Models;
 
 namespace Contracts;
@@ -7,6 +6,7 @@ public interface IEnrollmentRepository
 {
     void CreateEnrollment(Enrollment enrollment);
     Task<Enrollment?> GetEnrollmentAsync(Guid studentId, Guid courseId, bool trackChanges);
+    Task<IEnumerable<Enrollment>> GetEnrollmentsByStudentId(Guid studentId, bool trackChanges);
     void DeleteEnrollment(Enrollment enrollment);
     
 
