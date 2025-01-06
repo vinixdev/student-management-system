@@ -19,5 +19,10 @@ public class EnrollmentRepository : RepositoryBase<Enrollment>, IEnrollmentRepos
         return await FindByCondition(e => e.StudentId.Equals(studentId), trackChanges).ToListAsync();
     }
 
+    public async Task<IEnumerable<Enrollment>> GetEnrollmentsByCourseIdAsync(Guid courseId, bool trackChanges)
+    {
+        return await FindByCondition(e => e.CourseId.Equals(courseId), trackChanges).ToListAsync();
+    }
+
     public void DeleteEnrollment(Enrollment enrollment) => Delete(enrollment);
 }
