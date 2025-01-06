@@ -14,4 +14,5 @@ public interface IStudentRepository
     void UpdateStudent(Student student);
 
     void DeleteStudent(Student student);
+    Task<IEnumerable<Student>> GetStudentsByIdsAsync(IEnumerable<Guid> studentIds, bool trackChanges);
 }
