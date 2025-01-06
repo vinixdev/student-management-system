@@ -1,0 +1,11 @@
+meta {
+  name: Get Student Courses
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{URL}}:{{PORT}}/api/students/{{STUDENT_ID}}/courses
+  body: none
+  auth: none
+}
