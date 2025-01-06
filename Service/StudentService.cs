@@ -80,4 +80,8 @@ public class StudentService : ServiceBase, IStudentService
 
         await Repository.SaveAsync();
     }
+    public async Task GetStudentCoursesAsync(Guid studentId, bool trackChanges)
+    {
+        throw new NotImplementedException();
+    }
 }
