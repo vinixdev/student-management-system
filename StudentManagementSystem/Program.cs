@@ -37,6 +37,8 @@ builder.Services.AddControllers(opt =>
 
 var app = builder.Build();
 
+app.UseExceptionHandler(opt => { });
+
 if (app.Environment.IsProduction())
     app.UseHsts();
 
