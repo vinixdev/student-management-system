@@ -34,6 +34,5 @@ public class ServiceBase
     
     // TODO: Collection creation For Entities
     // TODO: Validation(I use Global Filter instead of ActionFilter Level)
-    // TODO: Global error handling
     
 }

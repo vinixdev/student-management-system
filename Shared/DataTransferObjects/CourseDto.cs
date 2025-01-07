@@ -11,5 +11,5 @@ public record CourseDto
     
     public required string Instructor { get; set; }
 
-    public DateTime CreatedAt { get; init; } = DateTime.Now;
+    public string? CreatedAt { get; set; }
 }
