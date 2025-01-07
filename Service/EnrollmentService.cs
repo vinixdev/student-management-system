@@ -9,7 +9,7 @@ namespace Service;
 
 public class EnrollmentService : ServiceBase, IEnrollmentService
 {
-    public EnrollmentService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper): base(logger, repositoryManager, mapper)
+    public EnrollmentService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper) : base(logger, repositoryManager, mapper)
     {
     }
 
@@ -20,12 +20,12 @@ public class EnrollmentService : ServiceBase, IEnrollmentService
         await TryGetEntityAsync<Course>(courseId, false);
 
         enrollmentForCreationDto ??= new EnrollmentForCreationDto();
-        
+
         var enrollmentEntity = Mapper.Map<Enrollment>(enrollmentForCreationDto);
-        
+
         enrollmentEntity.StudentId = studentId;
         enrollmentEntity.CourseId = courseId;
-        
+
         Repository.Entrollment.CreateEnrollment(enrollmentEntity);
 
         await Repository.SaveAsync();
@@ -34,8 +34,8 @@ public class EnrollmentService : ServiceBase, IEnrollmentService
     {
         var enrollmentEntity = await Repository.Entrollment.GetEnrollmentAsync(studentId, courseId, trackChanges);
 
-        if (enrollmentEntity == null) throw new EnrollmentNotFound();
-        
+        if (enrollmentEntity == null) throw new EntityNotFound($"{nameof(Enrollment)} not found.");
+
         Repository.Entrollment.DeleteEnrollment(enrollmentEntity);
 
         await Repository.SaveAsync();
