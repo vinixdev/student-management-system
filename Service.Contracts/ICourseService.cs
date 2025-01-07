@@ -13,6 +13,6 @@ public interface ICourseService
     Task<(CourseForUpdateDto courseForUpdateDto, Course courseEntity)> GetCourseForPatchAsync(Guid courseId, bool trackChanges);
     Task SavePatchedCourseAsync(CourseForUpdateDto courseForUpdateDto, Course courseEntity);
     Task<IEnumerable<StudentDto>> GetCourseStudentsAsync(Guid courseId, bool trackChanges);
-    Task GetCourseByIds(IEnumerable<Guid> courseIds, bool trackChanges);
+    Task<IEnumerable<CourseDto>> GetCourseByIds(IEnumerable<Guid> courseIds, bool trackChanges);
     Task<IEnumerable<CourseDto>> CreateCourseCollection(IEnumerable<CourseForCreationDto> courseForCreationDtos);
 }

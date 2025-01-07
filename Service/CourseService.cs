@@ -1,5 +1,6 @@
 using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -97,13 +98,30 @@ public class CourseService : ServiceBase, ICourseService
         return studentsToReturn;
     }
 
-    public Task GetCourseByIds(IEnumerable<Guid> courseIds, bool trackChanges)
+    public async Task<IEnumerable<CourseDto>> GetCourseByIds(IEnumerable<Guid> courseIds, bool trackChanges)
     {
-        throw new NotImplementedException();
+        if (courseIds == null || !courseIds.Any()) throw new IdsCollectionEmpty();
+
+        var courseEntities = await Repository.Course.GetCoursesByIdsAsync(courseIds, trackChanges);
+
+        var courseDtos = Mapper.Map<IEnumerable<CourseDto>>(courseEntities);
+
+        return courseDtos;
     }
 
-    public Task<IEnumerable<CourseDto>> CreateCourseCollection(IEnumerable<CourseForCreationDto> courseForCreationDtos)
+    public async Task<IEnumerable<CourseDto>> CreateCourseCollection(IEnumerable<CourseForCreationDto> courseForCreationDtos)
     {
-        throw new NotImplementedException();
+        if (!courseForCreationDtos.Any() || courseForCreationDtos == null) throw new EntityCollectionEmpty(nameof(Course));
+
+        var courseEntities = Mapper.Map<IEnumerable<Course>>(courseForCreationDtos);
+
+        foreach (var course in courseEntities)
+            Repository.Course.CreateCourse(course);
+
+        await Repository.SaveAsync();
+
+        var courseDtos = Mapper.Map<IEnumerable<CourseDto>>(courseEntities);
+
+        return courseDtos;
     }
 }
