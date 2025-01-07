@@ -23,19 +23,8 @@ public sealed class CoruseRipository : RepositoryBase<Course>, ICoruseRepository
 
     public void CreateCourse(Course course) => Create(course);
     public void DeleteCourse(Course course) => Delete(course);
-    public async Task<IEnumerable<Course>> GetCoursesByIdsAsync(IEnumerable<Guid> courseIds, bool trackChanges)
-    {
-        var idsList = courseIds.ToList();
-        if (!idsList.Any()) throw new IdsCollectionEmpty();
 
-        List<Course> courses = new List<Course>();
+    public async Task<IEnumerable<Course>> GetCoursesByIdsAsync(IEnumerable<Guid> courseIds, bool trackChanges) =>
+        await FindByCondition(c => courseIds.Contains(c.Id), trackChanges).ToListAsync();
 
-        foreach (var courseId in idsList)
-        {
-            var course = await FindByCondition(c => c.Id.Equals(courseId), trackChanges).SingleOrDefaultAsync();
-            if(course != null) courses.Add(course);
-        }
-
-        return courses;
-    }
 }

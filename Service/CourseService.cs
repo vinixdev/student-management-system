@@ -87,6 +87,8 @@ public class CourseService : ServiceBase, ICourseService
 
         var studentIds = enrollments.Select(e => e.StudentId).ToList();
 
+        if (studentIds.Count == 0) return [];
+
         var studentEntities = await Repository.Student.GetStudentsByIdsAsync(studentIds, trackChanges);
 
         var studentsToReturn = Mapper.Map<IEnumerable<StudentDto>>(studentEntities);
