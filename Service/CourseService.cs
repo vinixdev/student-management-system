@@ -9,7 +9,8 @@ namespace Service;
 public class CourseService : ServiceBase, ICourseService
 {
     public CourseService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper) : base(logger,
-        repositoryManager, mapper) { }
+        repositoryManager, mapper)
+    { }
 
     public async Task<IEnumerable<CourseDto>> GetAllCourses(bool trackChanges)
     {
@@ -32,9 +33,9 @@ public class CourseService : ServiceBase, ICourseService
     public async Task<CourseDto> CreateCourseAsync(CourseForCreationDto courseForCreationDto)
     {
         var courseEntity = Mapper.Map<Course>(courseForCreationDto);
-        
+
         Repository.Course.CreateCourse(courseEntity);
-        
+
         await Repository.SaveAsync();
 
         var courseDto = Mapper.Map<CourseDto>(courseEntity);
@@ -45,7 +46,7 @@ public class CourseService : ServiceBase, ICourseService
     public async Task DeleteCourseAsync(Guid courseId)
     {
         var courseEntity = await TryGetEntityAsync<Course>(courseId, false);
-        
+
         Repository.Course.DeleteCourse(courseEntity);
 
         await Repository.SaveAsync();
@@ -94,5 +95,15 @@ public class CourseService : ServiceBase, ICourseService
         var studentsToReturn = Mapper.Map<IEnumerable<StudentDto>>(studentEntities);
 
         return studentsToReturn;
+    }
+
+    public Task GetCourseByIds(IEnumerable<Guid> courseIds, bool trackChanges)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<CourseDto>> CreateCourseCollection(IEnumerable<CourseForCreationDto> courseForCreationDtos)
+    {
+        throw new NotImplementedException();
     }
 }
