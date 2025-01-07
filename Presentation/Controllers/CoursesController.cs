@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
@@ -7,7 +8,7 @@ using Shared.DataTransferObjects;
 namespace Presentation.Controllers;
 [ApiController]
 [Route("api/courses")]
-public class CoursesController: ControllerBase
+public class CoursesController : ControllerBase
 {
     private readonly IServiceManager _service;
 
@@ -24,7 +25,7 @@ public class CoursesController: ControllerBase
     [HttpGet("{courseId:guid}", Name = "GetSingleCourse")]
     public async Task<IActionResult> GetSingleCourse(Guid courseId)
     {
-        var course = await _service.Course.GetCourseAsync(courseId, trackChanges:false);
+        var course = await _service.Course.GetCourseAsync(courseId, trackChanges: false);
 
         return Ok(course);
     }
@@ -65,7 +66,7 @@ public class CoursesController: ControllerBase
         if (courseForUpdateDto == null) return BadRequest("courseForUpdateDto is null.");
 
         var result = await _service.Course.GetCourseForPatchAsync(courseId, trackChanges: true);
-        
+
         courseForUpdateDto.ApplyTo(result.courseForUpdateDto, ModelState);
 
         await _service.Course.SavePatchedCourseAsync(result.courseForUpdateDto, result.courseEntity);
@@ -77,9 +78,28 @@ public class CoursesController: ControllerBase
     public async Task<IActionResult> GetCourseStudents(Guid courseId)
     {
         var courseStudents = await _service.Course.GetCourseStudentsAsync(courseId, false);
-        
+
         return Ok(courseStudents);
     }
-    
-    
+
+    [HttpGet("collection/({courseIds})", Name = "GetCourseByIds")]
+    public async Task<IActionResult> GetCourseByIds(IEnumerable<Guid> courseIds)
+    {
+        var courses = await _service.Course.GetCourseByIds(courseIds, false);
+
+        return Ok(courses);
+    }
+
+    [HttpPost("collection")]
+    public async Task<IActionResult> CreateCourseCollection([FromBody] IEnumerable<CourseForCreationDto>? courseCreationDtoCollection)
+    {
+
+        if (courseCreationDtoCollection == null) return BadRequest("Course collection is empty.");
+
+        var result = await _service.Course.CreateCourseCollection(courseCreationDtoCollection);
+
+        return CreatedAtRoute("GetCourseByIds", new { courseIds = result.ids }, result.courses);
+    }
+
+
 }

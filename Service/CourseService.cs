@@ -109,7 +109,7 @@ public class CourseService : ServiceBase, ICourseService
         return courseDtos;
     }
 
-    public async Task<IEnumerable<CourseDto>> CreateCourseCollection(IEnumerable<CourseForCreationDto> courseForCreationDtos)
+    public async Task<(IEnumerable<CourseDto> courses, string ids)> CreateCourseCollection(IEnumerable<CourseForCreationDto> courseForCreationDtos)
     {
         if (!courseForCreationDtos.Any() || courseForCreationDtos == null) throw new EntityCollectionEmpty(nameof(Course));
 
@@ -122,6 +122,8 @@ public class CourseService : ServiceBase, ICourseService
 
         var courseDtos = Mapper.Map<IEnumerable<CourseDto>>(courseEntities);
 
-        return courseDtos;
+        var ids = string.Join(",", courseDtos.Select(c => c.Id));
+
+        return (courses: courseDtos, ids);
     }
 }

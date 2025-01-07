@@ -1,0 +1,20 @@
+meta {
+  name: Create Course Collection
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{URL}}:{{PORT}}/api/courses/collection
+  body: json
+  auth: none
+}
+
+body:json {
+  [
+    {
+      "name": "Learning Python",
+      "instructor": "Patrick Star"
+    }
+  ]
+}
