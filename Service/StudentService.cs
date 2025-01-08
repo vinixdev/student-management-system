@@ -1,5 +1,6 @@
 using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared;
@@ -95,5 +96,35 @@ public class StudentService : ServiceBase, IStudentService
         var coursesToReturn = Mapper.Map<IEnumerable<CourseDto>>(courses);
 
         return coursesToReturn;
+    }
+
+    public async Task<IEnumerable<StudentDto>> GetStudentByIdsAsync(IEnumerable<Guid> studentIds, bool trackChanges)
+    {
+        if (studentIds is null || !studentIds.Any()) throw new IdsCollectionEmpty();
+
+        var studentEntities = await Repository.Student.GetStudentsByIdsAsync(studentIds, trackChanges);
+
+        var studentDtos = Mapper.Map<IEnumerable<StudentDto>>(studentEntities);
+
+        return studentDtos;
+    }
+
+    public async Task<(IEnumerable<StudentDto> studentDtos, string ids)> CreateStudentCollection(IEnumerable<StudentForCreationDto> studentCreationDtos)
+    {
+        if (studentCreationDtos is null || !studentCreationDtos.Any()) throw new EntityCollectionEmpty(nameof(Student));
+
+        var studentEntities = Mapper.Map<IEnumerable<Student>>(studentCreationDtos);
+
+        foreach (var student in studentEntities)
+        {
+            Repository.Student.CreateStudent(student);
+        }
+
+        await Repository.SaveAsync();
+
+        var studentDtos = Mapper.Map<IEnumerable<StudentDto>>(studentEntities);
+        var ids = string.Join(',', studentDtos.Select(s => s.Id));
+
+        return (studentDtos, ids);
     }
 }
