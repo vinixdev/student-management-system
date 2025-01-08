@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ActionFilters;
+using Presentation.ModelBinders;
 using Service.Contracts;
 using Shared;
 using Shared.DataTransferObjects;
@@ -83,6 +84,25 @@ public class StudentsController : ControllerBase
         var studentCourses = await _service.Student.GetStudentCoursesAsync(studentId, false);
 
         return Ok(studentCourses);
+    }
+
+    [HttpGet("collection/({studentIds})", Name = "GetStudentByIds")]
+    public async Task<IActionResult> GetStudentByIds([ModelBinder(BinderType = typeof(ArrayModelBinder))]IEnumerable<Guid> studentIds)
+    {
+        var students = await _service.Student.GetStudentByIdsAsync(studentIds, false);
+
+        return Ok(students);
+    }
+
+    [HttpPost("collection")]
+    public async Task<IActionResult> CreateStudentCollection(
+        [FromBody] IEnumerable<StudentForCreationDto>? studentForCreationDtos)
+    {
+        if (studentForCreationDtos is null) return BadRequest("Student collection is empty.");
+
+        var result = await _service.Student.CreateStudentCollection(studentForCreationDtos);
+
+        return CreatedAtRoute("GetStudentByIds", new { studentIds = result.ids }, result.studentDtos);
     }
 
 }
