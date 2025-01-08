@@ -10,7 +10,7 @@ namespace Service;
 
 public class StudentService : ServiceBase, IStudentService
 {
-    public StudentService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper) : base(logger, repositoryManager, mapper) {}
+    public StudentService(IRepositoryManager repositoryManager, ILoggerManager logger, IMapper mapper) : base(logger, repositoryManager, mapper) { }
 
 
     public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync(bool trackChanges)
@@ -27,11 +27,11 @@ public class StudentService : ServiceBase, IStudentService
     public async Task<StudentDto> CreateStudentAsync(StudentForCreationDto studentForCreationDto)
     {
         var studentEntity = Mapper.Map<Student>(studentForCreationDto);
-        
+
         studentEntity.StdId = Guid.NewGuid().ToString("N");
-        
+
         Repository.Student.CreateStudent(studentEntity);
-        
+
         await Repository.SaveAsync();
 
         var studentDto = Mapper.Map<StudentDto>(studentEntity);
@@ -54,7 +54,7 @@ public class StudentService : ServiceBase, IStudentService
         var studentEntity = await TryGetEntityAsync<Student>(studentId, trackChanges);
 
         Mapper.Map(studentForUpdate, studentEntity);
-        
+
         await Repository.SaveAsync();
     }
 
@@ -63,7 +63,7 @@ public class StudentService : ServiceBase, IStudentService
         var studentEntity = await TryGetEntityAsync<Student>(studentId, trackChanges);
 
         var studentPatch = Mapper.Map<StudentForUpdateDto>(studentEntity);
-        
+
         return (studentPatch, studentEntity);
     }
 
@@ -76,7 +76,7 @@ public class StudentService : ServiceBase, IStudentService
     public async Task DeleteStudentAsync(Guid studentId)
     {
         var studentEntity = await TryGetEntityAsync<Student>(studentId, false);
-        
+
         Repository.Student.DeleteStudent(studentEntity);
 
         await Repository.SaveAsync();
@@ -117,6 +117,7 @@ public class StudentService : ServiceBase, IStudentService
 
         foreach (var student in studentEntities)
         {
+            student.StdId = Guid.NewGuid().ToString("N");
             Repository.Student.CreateStudent(student);
         }
 

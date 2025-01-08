@@ -6,6 +6,23 @@ meta {
 
 post {
   url: {{URL}}:{{PORT}}/api/students/collection
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  [
+    {
+      "firstName": "Squidward",
+      "lastName": "Tentacles",
+      "email": "squidward@tentacles.com",
+      "birthDate": "1977-10-09"
+    },
+    {
+      "firstName": "Eugene",
+      "lastName": "Krabs",
+      "email": "mr.krabs@kk.com",
+      "birthDate": "1942-11-30"
+    }
+  ]
 }
