@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ModelBinders;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -83,7 +84,7 @@ public class CoursesController : ControllerBase
     }
 
     [HttpGet("collection/({courseIds})", Name = "GetCourseByIds")]
-    public async Task<IActionResult> GetCourseByIds(IEnumerable<Guid> courseIds)
+    public async Task<IActionResult> GetCourseByIds([ModelBinder(BinderType = typeof(ArrayModelBinder))]IEnumerable<Guid> courseIds)
     {
         var courses = await _service.Course.GetCourseByIds(courseIds, false);
 
