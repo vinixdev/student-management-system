@@ -21,4 +21,8 @@ public interface IStudentService
 
     Task<IEnumerable<CourseDto>> GetStudentCoursesAsync(Guid studentId, bool trackChanges);
 
+    Task<IEnumerable<StudentDto>> GetStudentByIdsAsync(IEnumerable<Guid> studentIds, bool trackChanges);
+
+    Task<(IEnumerable<StudentDto> studentDtos, string ids)> CreateStudentCollection(
+        IEnumerable<StudentForCreationDto> studentCreationDtos);
 }
