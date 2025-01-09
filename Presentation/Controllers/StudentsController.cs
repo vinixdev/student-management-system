@@ -34,32 +34,28 @@ public class StudentsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateNewStudent([FromBody] StudentForCreationDto? studentDto)
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> CreateNewStudent([FromBody] StudentForCreationDto studentDto)
     {
-        if (studentDto == null) return BadRequest("StudentDto object is null.");
-        
         var newStudent = await _service.Student.CreateStudentAsync(studentDto);
         
         return CreatedAtRoute("GetSingleStudent", new {studentId = newStudent.Id}, newStudent);
     }
 
     [HttpPut("{studentId:guid}")]
-    public async Task<IActionResult> UpdateStudent(Guid studentId, [FromBody] StudentForUpdateDto? studentForUpdateDto)
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> UpdateStudent(Guid studentId, [FromBody] StudentForUpdateDto studentForUpdateDto)
     {
-        if (studentForUpdateDto == null) return BadRequest("StudentForUpdateDto is null.");
-        
         await _service.Student.UpdateStudentAsync(studentId, studentForUpdateDto, true);
         
         return NoContent();
     }
     
     [HttpPatch("{studentId:guid}")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> UpdatePartialStudent(Guid studentId,
-        [FromBody] JsonPatchDocument<StudentForUpdateDto>? studentPatch)
+        [FromBody] JsonPatchDocument<StudentForUpdateDto> studentPatch)
     {
-
-        if (studentPatch == null) return BadRequest("StudentPatch is null.");
-        
         var result = await _service.Student.GetStudentForPatch(studentId, true);
         
         studentPatch.ApplyTo(result.studentPatch, ModelState);
@@ -95,11 +91,10 @@ public class StudentsController : ControllerBase
     }
 
     [HttpPost("collection")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> CreateStudentCollection(
-        [FromBody] IEnumerable<StudentForCreationDto>? studentForCreationDtos)
+        [FromBody] IEnumerable<StudentForCreationDto> studentForCreationDtos)
     {
-        if (studentForCreationDtos is null) return BadRequest("Student collection is empty.");
-
         var result = await _service.Student.CreateStudentCollection(studentForCreationDtos);
 
         return CreatedAtRoute("GetStudentByIds", new { studentIds = result.ids }, result.studentDtos);

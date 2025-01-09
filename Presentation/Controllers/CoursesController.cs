@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ActionFilters;
 using Presentation.ModelBinders;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -32,14 +33,12 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCourse([FromBody] CourseForCreationDto? courseForCreationDto)
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> CreateCourse([FromBody] CourseForCreationDto courseForCreationDto)
     {
-        if (courseForCreationDto == null) return BadRequest("courseForCreationDto is null.");
-
         var course = await _service.Course.CreateCourseAsync(courseForCreationDto);
 
         return CreatedAtRoute("GetSingleCourse", new { courseId = course.Id }, course);
-
     }
 
     [HttpDelete("{courseId:guid}")]
@@ -50,10 +49,9 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPut("{courseId:guid}")]
-    public async Task<IActionResult> UpdateCourse(Guid courseId, [FromBody] CourseForUpdateDto? courseForUpdateDto)
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> UpdateCourse(Guid courseId, [FromBody] CourseForUpdateDto courseForUpdateDto)
     {
-        if (courseForUpdateDto == null) return BadRequest("courseForUpdateDto is null.");
-
         var updatedCourse = await _service.Course.UpdateCourseAsync(courseId, courseForUpdateDto, trackChanges: true);
 
         return Ok(updatedCourse);
@@ -61,11 +59,10 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPatch("{courseId:guid}")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> PartialUpdateCourse(Guid courseId,
-        [FromBody] JsonPatchDocument<CourseForUpdateDto>? courseForUpdateDto)
+        [FromBody] JsonPatchDocument<CourseForUpdateDto> courseForUpdateDto)
     {
-        if (courseForUpdateDto == null) return BadRequest("courseForUpdateDto is null.");
-
         var result = await _service.Course.GetCourseForPatchAsync(courseId, trackChanges: true);
 
         courseForUpdateDto.ApplyTo(result.courseForUpdateDto, ModelState);
@@ -92,11 +89,9 @@ public class CoursesController : ControllerBase
     }
 
     [HttpPost("collection")]
-    public async Task<IActionResult> CreateCourseCollection([FromBody] IEnumerable<CourseForCreationDto>? courseCreationDtoCollection)
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> CreateCourseCollection([FromBody] IEnumerable<CourseForCreationDto> courseCreationDtoCollection)
     {
-
-        if (courseCreationDtoCollection == null) return BadRequest("Course collection is empty.");
-
         var result = await _service.Course.CreateCourseCollection(courseCreationDtoCollection);
 
         return CreatedAtRoute("GetCourseByIds", new { courseIds = result.ids }, result.courses);

@@ -20,6 +20,7 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureServiceManager();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddExceptionHandler<GlobalErrorHandler>();
+builder.Services.AddScoped<ValidationFilterAttribute>();
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
@@ -28,7 +29,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 builder.Services.AddControllers(opt =>
     {
-        opt.Filters.Add(new ValidationFilterAttribute());
+        // opt.Filters.Add(new ValidationFilterAttribute());
         opt.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
     })
     .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)

@@ -31,7 +31,4 @@ public class ServiceBase
 
         return entity as TEntity ?? throw new EntityNotFound(typeof(TEntity).Name, entityId);
     }
-
-    // TODO: Validation(I use Global Filter instead of ActionFilter Level) => move it to controller level
-
 }
