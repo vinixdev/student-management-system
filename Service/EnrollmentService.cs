@@ -19,6 +19,10 @@ public class EnrollmentService : ServiceBase, IEnrollmentService
         await TryGetEntityAsync<Student>(studentId, false);
         await TryGetEntityAsync<Course>(courseId, false);
 
+        var alreadyEnrollment = await Repository.Entrollment.GetEnrollmentByStudentIdAndCourseIdAsync(studentId, courseId, false);
+
+        if (alreadyEnrollment != null) throw new AlreadyEnrollment(studentId, courseId);
+
         enrollmentForCreationDto ??= new EnrollmentForCreationDto();
 
         var enrollmentEntity = Mapper.Map<Enrollment>(enrollmentForCreationDto);

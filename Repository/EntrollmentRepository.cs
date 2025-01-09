@@ -25,4 +25,9 @@ public class EnrollmentRepository : RepositoryBase<Enrollment>, IEnrollmentRepos
     }
 
     public void DeleteEnrollment(Enrollment enrollment) => Delete(enrollment);
+
+    public async Task<Enrollment?> GetEnrollmentByStudentIdAndCourseIdAsync(Guid studentId, Guid courseId, bool trackChanges)
+    {
+        return await FindByCondition(e => e.StudentId.Equals(studentId) && e.CourseId.Equals(courseId), trackChanges).SingleOrDefaultAsync();
+    }
 }
