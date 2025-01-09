@@ -19,20 +19,19 @@ public class ServiceBase
         Mapper = mapper;
     }
 
-    protected async Task<TEntity> TryGetEntityAsync<TEntity>(Guid entityId, bool trackChanges) where TEntity: class
+    protected async Task<TEntity> TryGetEntityAsync<TEntity>(Guid entityId, bool trackChanges) where TEntity : class
     {
         object? entity = null;
-        
-        if (typeof(TEntity) == typeof(Student)) 
+
+        if (typeof(TEntity) == typeof(Student))
             entity = await Repository.Student.GetStudentAsync(entityId, trackChanges);
-        
+
         else if (typeof(TEntity) == typeof(Course))
             entity = await Repository.Course.GetCourseAsync(entityId, trackChanges);
-        
+
         return entity as TEntity ?? throw new EntityNotFound(typeof(TEntity).Name, entityId);
     }
-    
-    // TODO: Collection creation For Entities
-    // TODO: Validation(I use Global Filter instead of ActionFilter Level)
-    
+
+    // TODO: Validation(I use Global Filter instead of ActionFilter Level) => move it to controller level
+
 }

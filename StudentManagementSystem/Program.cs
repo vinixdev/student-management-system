@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
 using NLog;
 using Presentation.ActionFilters;
 using StudentManagementSystem;
@@ -27,13 +29,14 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddControllers(opt =>
     {
         opt.Filters.Add(new ValidationFilterAttribute());
+        opt.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
     })
     .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
     .AddJsonOptions(opt =>
     {
         opt.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-    })
-    .AddNewtonsoftJson();
+    });
+    // .AddNewtonsoftJson();
 
 var app = builder.Build();
 
@@ -56,3 +59,7 @@ app.UseCors("CorsPolicy");
 app.MapControllers();
 
 app.Run();
+
+NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection().AddLogging().AddMvc()
+    .AddNewtonsoftJson().Services.BuildServiceProvider().GetRequiredService<IOptions<MvcOptions>>().Value
+    .InputFormatters.OfType<NewtonsoftJsonPatchInputFormatter>().First(); 
